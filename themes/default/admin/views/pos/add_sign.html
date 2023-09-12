@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Signature Pad</title>
+</head>
+<body>
+
+<form id="signature-form" action="save.php" method="post">
+
+<canvas id="signature-canvas" style="width:500px;height:200px;max-width:100%;border:1px #CCC solid;"></canvas>
+
+<div id="signature-message"></div>
+
+<div id="signature-buttons">
+	<input type="button" id="clear-signature-btn" value="Clear"> 
+	<input type="button" id="save-signature-btn" value="Save">
+</div>
+
+<input type="hidden" name="signature" id="signature-data" value="">
+
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+<script src="example.js"></script>
+
+</body>
+</html>

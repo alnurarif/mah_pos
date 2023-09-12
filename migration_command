@@ -1,0 +1,20 @@
+ALTER TABLE `sma_sales` ADD `repair_status` TINYINT(1) NOT NULL DEFAULT '0' AFTER `repair_note`;
+
+CREATE TABLE `sma_repair_history` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `created_date` datetime default NULL,
+ `updated_date` datetime default NULL,
+ `created_by` int(9) DEFAULT NULL,
+ `updated_by` int(9) DEFAULT NULL,
+ `sale_id` int(11) NOT NULL,
+ `repair_note` varchar(500) DEFAULT NULL,
+ `repair_status` varchar(500) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
+
+
+
+ALTER TABLE `sma_gift_card_topups` ADD `award_point` INT(11) NULL DEFAULT NULL AFTER `created_by`;
+
+ALTER TABLE `sma_gift_cards` ADD `award_point` INT(11) NULL DEFAULT NULL AFTER `created_by`;
