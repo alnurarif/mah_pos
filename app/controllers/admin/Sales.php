@@ -205,16 +205,18 @@ class Sales extends MY_Controller
         $this->load->library('datatables');
         if ($warehouse_id) {
             $this->datatables
-                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, ".$this->db->dbprefix('companies') .".name, phone, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance,type_detail,sale_status, payment_status, companies.email as cemail")
+                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, ".$this->db->dbprefix('companies') .".name, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance,type_detail,sale_status, payment_status, companies.email as cemail")
                 ->from('sales')
-                ->join('companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
                 ->where('warehouse_id', $warehouse_id)
                 ->group_by('sales.id');
         } else {
             $this->datatables
-                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, ".$this->db->dbprefix('companies') .".name, phone, (grand_total+COALESCE(rounding, 0)), paid, (grand_total+rounding-paid) as balance, type_detail,sale_status, payment_status, companies.email as cemail")
+                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, ".$this->db->dbprefix('companies') .".name, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total+rounding-paid) as balance, type_detail,sale_status, payment_status, companies.email as cemail")
                 ->from('sales')
-                ->join('companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
                 ->group_by('sales.id');
         }
         $this->datatables->where('pos', 1);

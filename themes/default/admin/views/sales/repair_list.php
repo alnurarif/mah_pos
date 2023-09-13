@@ -60,7 +60,7 @@
                 "aoColumns": [{
                     "bSortable": false,
                     "mRender": checkbox
-                }, {"mRender": fld}, null, null, null,{"mRender": currencyFormat}, {"mRender": currencyFormat}, {"mRender": currencyFormat}, {"mRender": repair_status},{"mRender": row_status}, {"mRender": pay_status}, {"bSortable": false}],
+                }, {"mRender": fld}, null, null, null,{"mRender": splitText},{"mRender": currencyFormat}, {"mRender": currencyFormat}, {"mRender": currencyFormat}, {"mRender": repair_status},{"mRender": row_status}, {"mRender": pay_status}, {"bSortable": false}],
                 "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
                     var gtotal = 0, paid = 0, balance = 0;
                     for (var i = 0; i < aaData.length; i++) {
@@ -69,20 +69,31 @@
                         balance += parseFloat(aaData[aiDisplay[i]][7]);
                     }
                     var nCells = nRow.getElementsByTagName('th');
-                    nCells[5].innerHTML = currencyFormat(parseFloat(gtotal));
-                    nCells[6].innerHTML = currencyFormat(parseFloat(paid));
-                    nCells[7].innerHTML = currencyFormat(parseFloat(balance));
+                    nCells[6].innerHTML = currencyFormat(parseFloat(gtotal));
+                    nCells[7].innerHTML = currencyFormat(parseFloat(paid));
+                    nCells[8].innerHTML = currencyFormat(parseFloat(balance));
                 }
             }).fnSetFilteringDelay().dtFilter([
                 {column_number: 1, filter_default_label: "[<?=lang('date');?> (yyyy-mm-dd)]", filter_type: "text", data: []},
                 {column_number: 2, filter_default_label: "[<?=lang('reference_no');?>]", filter_type: "text", data: []},
                 {column_number: 3, filter_default_label: "[<?=lang('customer');?>]", filter_type: "text"},
                 {column_number: 4, filter_default_label: "[<?=lang('Phone');?>]", filter_type: "text"},
+                {column_number: 5, filter_default_label: "[<?=lang('items');?>]", filter_type: "text", data: []},
                 {column_number: 8, filter_default_label: "[<?=lang('Repair_Status');?>]", filter_type: "text", data: []},
-                {column_number: 9, filter_default_label: "[<?=lang('sale_status');?>]", filter_type: "text", data: []},
-                {column_number: 10, filter_default_label: "[<?=lang('payment_status');?>]", filter_type: "text", data: []},
+                {column_number: 10, filter_default_label: "[<?=lang('sale_status');?>]", filter_type: "text", data: []},
+                {column_number: 11, filter_default_label: "[<?=lang('payment_status');?>]", filter_type: "text", data: []},
             ], "footer");
-
+            function splitText(text){
+                let products = text.split(',')
+                console.log(products);
+                let toShow = ""
+                if(products.length >0){
+                    products.map((product,index) => {
+                        toShow += `<p style="text-align:left">${index+1}. ${product}</p>`;
+                    })
+                }
+                return toShow
+            }
             $(document).on('click', '.duplicate_pos', function (e) {
                 e.preventDefault();
                 var link = $(this).attr('href');
@@ -177,6 +188,7 @@
                                 <th><?= lang("reference_no"); ?></th>
                                 <th><?= lang("customer"); ?></th>
                                 <th><?= lang("Phone"); ?></th>
+                                <th><?= lang("items"); ?></th>
                                 <th><?= lang("grand_total"); ?></th>
                                 <th><?= lang("paid"); ?></th>
                                 <th><?= lang("balance"); ?></th>
@@ -196,6 +208,7 @@
                                 <th style="min-width:30px; width: 30px; text-align: center;">
                                     <input class="checkbox checkft" type="checkbox" name="check"/>
                                 </th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
