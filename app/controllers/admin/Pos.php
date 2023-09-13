@@ -520,7 +520,8 @@ class Pos extends MY_Controller
 
             $total_discount = $this->sma->formatDecimal(($order_discount + $product_discount), 4);
 
-            $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax - $order_discount));
+            // $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax - $order_discount));//commented by arif
+            $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax));
 
             $total_tax = $this->sma->formatDecimal(($product_tax + $order_tax), 4);
 

@@ -1529,7 +1529,8 @@ function loadItems() {
                             invoice_tax = formatDecimal(this.rate);
                         }
                         if (this.type == 1) {
-                            invoice_tax = formatDecimal(((total - order_discount) * this.rate) / 100, 4);
+                            // invoice_tax = formatDecimal(((total - order_discount) * this.rate) / 100, 4); //comment by arif
+                            invoice_tax = formatDecimal(((total) * this.rate) / 100, 4);
                         }
                     }
                 });
