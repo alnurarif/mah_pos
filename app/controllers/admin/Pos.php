@@ -186,11 +186,13 @@ class Pos extends MY_Controller
 
             $this->datatables
 
-                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance, sale_status, payment_status, companies.email as cemail")
+                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance, sale_status, payment_status, companies.email as cemail")
 
                 ->from('sales')
 
-                ->join('companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
+                
+                ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
 
                 ->where('warehouse_id', $warehouse_id)
 
@@ -200,11 +202,13 @@ class Pos extends MY_Controller
 
             $this->datatables
 
-                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone, (grand_total+COALESCE(rounding, 0)), paid, (grand_total+rounding-paid) as balance, sale_status, payment_status, companies.email as cemail")
+                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total+rounding-paid) as balance, sale_status, payment_status, companies.email as cemail")
 
                 ->from('sales')
 
-                ->join('companies', 'companies.id=sales.customer_id', 'left')
+                ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
+                
+                ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
 
                 ->group_by('sales.id');
 
