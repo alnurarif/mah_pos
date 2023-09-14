@@ -209,7 +209,7 @@ class Sales extends MY_Controller
                 ->from('sales')
                 ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
                 ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
-                ->where('warehouse_id', $warehouse_id)
+                ->where('sma_sales.warehouse_id', $warehouse_id)
                 ->group_by('sales.id');
         } else {
             $this->datatables

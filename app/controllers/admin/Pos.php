@@ -181,23 +181,22 @@ class Pos extends MY_Controller
 
 
         $this->load->library('datatables');
-
         if ($warehouse_id) {
-
+            
             $this->datatables
-
-                ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance, sale_status, payment_status, companies.email as cemail")
-
-                ->from('sales')
-
-                ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
-                
-                ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
-
-                ->where('warehouse_id', $warehouse_id)
-
-                ->group_by('sales.id');
-
+            
+            ->select($this->db->dbprefix('sales') . ".id as id, DATE_FORMAT(date, '%Y-%m-%d %T') as date, reference_no, customer, phone,GROUP_CONCAT(sma_sale_items.product_name) as product_names, (grand_total+COALESCE(rounding, 0)), paid, (grand_total-paid) as balance, sale_status, payment_status, companies.email as cemail")
+            
+            ->from('sales')
+            
+            ->join('sma_companies', 'companies.id=sales.customer_id', 'left')
+            
+            ->join('sma_sale_items', 'sma_sale_items.sale_id=sales.id', 'left')
+            
+            ->where('sma_sales.warehouse_id', $warehouse_id)
+            
+            ->group_by('sales.id');
+            
         } else {
 
             $this->datatables
