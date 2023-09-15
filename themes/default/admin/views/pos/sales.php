@@ -20,9 +20,6 @@
                 nRow.className = "receipt_link";
                 return nRow;
             },
-            "columnDefs": [
-                { "targets": [0], "className": "left-align" } // Apply left alignment to the first column (change [0] to the column index you want)
-            ],
             "aoColumns": [{
                 "bSortable": false,
                 "mRender": checkbox
@@ -151,7 +148,7 @@
                             <th><?= lang("reference_no"); ?></th>
                             <th><?= lang("customer"); ?></th>
 							<th><?= lang("phone"); ?></th>
-                            <th><?= lang("items"); ?></th>
+                            <th style="min-width:150px; width: 30px; text-align: center;"><?= lang("items"); ?></th>
                             <th><?= lang("grand_total"); ?></th>
                             <th><?= lang("paid"); ?></th>
                             <th><?= lang("balance"); ?></th>
@@ -174,7 +171,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
+                            <th style="min-width:150px; width: 30px; text-align: center;"></th>
                             <th><?= lang("grand_total"); ?></th>
                             <th><?= lang("paid"); ?></th>
                             <th><?= lang("balance"); ?></th>

@@ -188,7 +188,7 @@
                                 <th><?= lang("reference_no"); ?></th>
                                 <th><?= lang("customer"); ?></th>
                                 <th><?= lang("Phone"); ?></th>
-                                <th><?= lang("items"); ?></th>
+                                <th style="min-width:150px; width: 30px; text-align: center;"><?= lang("items"); ?></th>
                                 <th><?= lang("grand_total"); ?></th>
                                 <th><?= lang("paid"); ?></th>
                                 <th><?= lang("balance"); ?></th>
@@ -212,7 +212,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
+                                <th style="min-width:150px; width: 30px; text-align: center;"></th>
                                 <th><?= lang("grand_total"); ?></th>
                                 <th><?= lang("paid"); ?></th>
                                 <th><?= lang("balance"); ?></th>
