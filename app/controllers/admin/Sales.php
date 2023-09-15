@@ -945,7 +945,8 @@ class Sales extends MY_Controller
 
             $order_discount = $this->site->calculateDiscount($this->input->post('order_discount'), ($total + $product_tax));
             $total_discount = $this->sma->formatDecimal(($order_discount + $product_discount), 4);
-            $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax - $order_discount));
+            // $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax - $order_discount));
+            $order_tax = $this->site->calculateOrderTax($this->input->post('order_tax'), ($total + $product_tax));
             $total_tax = $this->sma->formatDecimal(($product_tax + $order_tax), 4);
             $grand_total = $this->sma->formatDecimal(($total + $total_tax + $this->sma->formatDecimal($shipping) - $order_discount), 4);
             $data = array('date' => $date,
