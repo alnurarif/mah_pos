@@ -64,9 +64,9 @@
                 "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
                     var gtotal = 0, paid = 0, balance = 0;
                     for (var i = 0; i < aaData.length; i++) {
-                        gtotal += parseFloat(aaData[aiDisplay[i]][5]);
-                        paid += parseFloat(aaData[aiDisplay[i]][6]);
-                        balance += parseFloat(aaData[aiDisplay[i]][7]);
+                        gtotal += parseFloat(aaData[aiDisplay[i]][6]);
+                        paid += parseFloat(aaData[aiDisplay[i]][7]);
+                        balance += parseFloat(aaData[aiDisplay[i]][8]);
                     }
                     var nCells = nRow.getElementsByTagName('th');
                     nCells[6].innerHTML = currencyFormat(parseFloat(gtotal));
@@ -79,7 +79,7 @@
                 {column_number: 3, filter_default_label: "[<?=lang('customer');?>]", filter_type: "text"},
                 {column_number: 4, filter_default_label: "[<?=lang('Phone');?>]", filter_type: "text"},
                 {column_number: 5, filter_default_label: "[<?=lang('items');?>]", filter_type: "text", data: []},
-                {column_number: 8, filter_default_label: "[<?=lang('Repair_Status');?>]", filter_type: "text", data: []},
+                {column_number: 9, filter_default_label: "[<?=lang('Repair_Status');?>]", filter_type: "text", data: []},
                 {column_number: 10, filter_default_label: "[<?=lang('sale_status');?>]", filter_type: "text", data: []},
                 {column_number: 11, filter_default_label: "[<?=lang('payment_status');?>]", filter_type: "text", data: []},
             ], "footer");
@@ -200,7 +200,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td colspan="11" class="dataTables_empty"><?= lang("loading_data"); ?></td>
+                                <td colspan="13" class="dataTables_empty"><?= lang("loading_data"); ?></td>
                             </tr>
                             </tbody>
                             <tfoot class="dtFilter">

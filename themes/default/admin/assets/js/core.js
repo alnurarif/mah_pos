@@ -2164,7 +2164,7 @@ $(document).ready(function() {
 
 
 
-$('body').on('click', '.repair_invoice_link td:not(:first-child, :nth-child(9), :nth-last-child(2), :last-child)', function() {
+$('body').on('click', '.repair_invoice_link td:not(:first-child, :nth-child(10), :nth-last-child(2), :last-child)', function() {
 
     $('#myModal').modal({
 
