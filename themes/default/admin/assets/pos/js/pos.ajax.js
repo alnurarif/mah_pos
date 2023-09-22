@@ -489,6 +489,7 @@ $(document).ready(function() {
      * Edit Row Modal Hanlder
      ----------------------- */
     $(document).on('click', '.edit', function() {
+        console.log('arif : from edit')
         var row = $(this).closest('tr');
         var row_id = row.attr('id');
         item_id = row.attr('data-item-id');
@@ -1119,6 +1120,7 @@ $(document).ready(function() {
 
 //localStorage.clear();
 function loadItems() {
+    console.log('arif : from load items')
     if (localStorage.getItem('positems')) {
         total = 0;
         count = 1;
@@ -1660,6 +1662,7 @@ function printLine(str) {
  ---------------------------- */
 
 function add_invoice_item(item) {
+    console.log('arif : from add item manually',item)
     if (count == 1) {
         positems = {};
         if ($('#poswarehouse').val() && $('#poscustomer').val()) {
@@ -1691,8 +1694,11 @@ function add_invoice_item(item) {
     positems[item_id].order = new Date().getTime();
     localStorage.setItem('positems', JSON.stringify(positems));
     loadItems();
+
+    if(item?.row?.category_id == 2 || item?.row?.category_name == "Cell Phones") openEditModal(item_id)
     return true;
 }
+
 
 if (typeof Storage === 'undefined') {
     $(window).bind('beforeunload', function(e) {
@@ -1701,6 +1707,144 @@ if (typeof Storage === 'undefined') {
             return message;
         }
     });
+}
+
+function openEditModal(item_id) {
+    var row = $("#posTable").find("[data-item-id='" + item_id + "']");
+    
+    // return false;
+    // var row = $(this).closest('tr');
+        var row_id = row.attr('id');
+        item_id = row.attr('data-item-id');
+        item = positems[item_id];
+        var qty = row
+                .children()
+                .children('.rquantity')
+                .val(),
+            product_option = row
+                .children()
+                .children('.roption')
+                .val(),
+            unit_price = formatDecimal(
+                row
+                    .children()
+                    .children('.ruprice')
+                    .val()
+            ),
+            discount = row
+                .children()
+                .children('.rdiscount')
+                .val();
+        if (item.options !== false) {
+            $.each(item.options, function() {
+                if (this.id == item.row.option && this.price != 0 && this.price != '' && this.price != null) {
+                    unit_price = parseFloat(item.row.real_unit_price) + parseFloat(this.price);
+                }
+            });
+        }
+        var real_unit_price = item.row.real_unit_price;
+        var net_price = unit_price;
+        $('#prModalLabel').text(item.row.code + ' - ' + item.row.name);
+        if (site.settings.tax1) {
+            $('#ptax').select2('val', item.row.tax_rate);
+            $('#old_tax').val(item.row.tax_rate);
+            var item_discount = 0,
+                ds = discount ? discount : '0';
+            if (ds.indexOf('%') !== -1) {
+                var pds = ds.split('%');
+                if (!isNaN(pds[0])) {
+                    item_discount = formatDecimal(parseFloat((unit_price * parseFloat(pds[0])) / 100), 4);
+                } else {
+                    item_discount = parseFloat(ds);
+                }
+            } else {
+                item_discount = parseFloat(ds);
+            }
+            net_price -= item_discount;
+            var pr_tax = item.row.tax_rate,
+                pr_tax_val = 0;
+            if (pr_tax !== null && pr_tax != 0) {
+                $.each(tax_rates, function() {
+                    if (this.id == pr_tax) {
+                        if (this.type == 1) {
+                            if (positems[item_id].row.tax_method == 0) {
+                                pr_tax_val = formatDecimal((net_price * parseFloat(this.rate)) / (100 + parseFloat(this.rate)), 4);
+                                pr_tax_rate = formatDecimal(this.rate) + '%';
+                                net_price -= pr_tax_val;
+                            } else {
+                                pr_tax_val = formatDecimal((net_price * parseFloat(this.rate)) / 100, 4);
+                                pr_tax_rate = formatDecimal(this.rate) + '%';
+                            }
+                        } else if (this.type == 2) {
+                            pr_tax_val = parseFloat(this.rate);
+                            pr_tax_rate = this.rate;
+                        }
+                    }
+                });
+            }
+        }
+        if (site.settings.product_serial !== 0) {
+            $('#pserial').val(
+                row
+                    .children()
+                    .children('.rserial')
+                    .val()
+            );
+        }
+        var opt = '<p style="margin: 12px 0 0 0;">n/a</p>';
+        if (item.options !== false) {
+            var o = 1;
+            opt = $('<select id="poption" name="poption" class="form-control select" />');
+            $.each(item.options, function() {
+                if (o == 1) {
+                    if (product_option == '') {
+                        product_variant = this.id;
+                    } else {
+                        product_variant = product_option;
+                    }
+                }
+                $('<option />', { value: this.id, text: this.name }).appendTo(opt);
+                o++;
+            });
+        } else {
+            product_variant = 0;
+        }
+        if (item.units !== false) {
+            uopt = $('<select id="punit" name="punit" class="form-control select" />');
+            $.each(item.units, function() {
+                if (this.id == item.row.unit) {
+                    $('<option />', { value: this.id, text: this.name, selected: true }).appendTo(uopt);
+                } else {
+                    $('<option />', { value: this.id, text: this.name }).appendTo(uopt);
+                }
+            });
+        } else {
+            uopt = '<p style="margin: 12px 0 0 0;">n/a</p>';
+        }
+
+        $('#poptions-div').html(opt);
+        $('#punits-div').html(uopt);
+        $('select.select').select2({ minimumResultsForSearch: 7 });
+        $('#pquantity').val(qty);
+        $('#old_qty').val(qty);
+        $('#pprice').val(unit_price);
+        $('#punit_price').val(formatDecimal(parseFloat(unit_price) + parseFloat(pr_tax_val)));
+        $('#poption').select2('val', item.row.option);
+        $('#old_price').val(unit_price);
+        $('#row_id').val(row_id);
+        $('#item_id').val(item_id);
+        $('#pserial').val(
+            row
+                .children()
+                .children('.rserial')
+                .val()
+        );
+        $('#pdiscount').val(discount);
+        $('#net_price').text(formatMoney(net_price));
+        $('#pro_tax').text(formatMoney(pr_tax_val));
+        $('#prModal')
+            .appendTo('body')
+            .modal('show');
 }
 
 function display_keyboards() {
@@ -2038,6 +2182,7 @@ function read_card() {
 
 function check_add_item_val() {
     $('#add_item').bind('keypress', function(e) {
+        console.log('arif : from key press add')
         if (e.keyCode == 13 || e.keyCode == 9) {
             e.preventDefault();
             $(this).autocomplete('search');
