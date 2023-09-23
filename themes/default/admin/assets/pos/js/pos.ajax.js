@@ -420,6 +420,7 @@ $(document).ready(function() {
     $(document).on('click', '.posdel', function() {
         var row = $(this).closest('tr');
         var item_id = row.attr('data-item-id');
+        console.log('arif : from pos del',protect_delete)
         if (protect_delete == 1) {
             var boxd = bootbox.dialog({
                 title: "<i class='fa fa-key'></i> Pin Code",
@@ -458,6 +459,7 @@ $(document).ready(function() {
                     });
             });
         } else {
+            console.log('arif : from posdel postitems item id', positems[item_id],checkPromoItem(item_id))
             delete positems[item_id];
             // row.remove();
             if (positems.hasOwnProperty(item_id)) {
@@ -469,21 +471,7 @@ $(document).ready(function() {
         return false;
     });
 
-    function checkPromoItem(id) {
-        var item_id = false;
-        $.each(positems, function() {
-            if (this.parent && this.parent == id) {
-                item_id = this.item_id;
-            }
-        });
-        if (item_id) {
-            delete positems[item_id];
-            localStorage.setItem('positems', JSON.stringify(positems));
-            loadItems();
-            return false;
-        }
-        return true;
-    }
+    
 
     /* -----------------------
      * Edit Row Modal Hanlder
@@ -1113,7 +1101,21 @@ $(document).ready(function() {
 
     // end ready function
 });
-
+function checkPromoItem(id) {
+    var item_id = false;
+    $.each(positems, function() {
+        if (this.parent && this.parent == id) {
+            item_id = this.item_id;
+        }
+    });
+    if (item_id) {
+        delete positems[item_id];
+        localStorage.setItem('positems', JSON.stringify(positems));
+        loadItems();
+        return false;
+    }
+    return true;
+}
 /* -----------------------
  * Load all items
  ----------------------- */
@@ -1121,6 +1123,7 @@ $(document).ready(function() {
 //localStorage.clear();
 function loadItems() {
     console.log('arif : from load items')
+    
     if (localStorage.getItem('positems')) {
         total = 0;
         count = 1;
@@ -1640,6 +1643,7 @@ function loadItems() {
             $('#add_item').attr('tabindex', 1);
             $('#add_item').focus();
         }
+        removeFromOrderListIfNotIMEI()
     }
 }
 
@@ -1708,8 +1712,137 @@ if (typeof Storage === 'undefined') {
         }
     });
 }
+$(document).on("click", function(event) {
+    let cell_phone_added_id = localStorage.getItem("cell_phone_added")
+    
+    var modal = $("#prModal");
 
+    if(cell_phone_added_id && $('#pserial').val() == ""){
+        $('#prModal')
+            .modal('show');
+    }
+
+});
+
+function removeFromOrderListIfNotIMEI() {
+    var item_id = localStorage.getItem("cell_phone_added");
+    console.log('arif : from remove order list if not imei', item_id, positems)
+    if(item_id != "" && positems[item_id].row.serial == ""){
+        localStorage.setItem("cell_phone_added", '')
+        if (protect_delete == 1) {
+            var boxd = bootbox.dialog({
+                title: "<i class='fa fa-key'></i> Pin Code",
+                message: '<input id="pos_pin" name="pos_pin" type="password" placeholder="Pin Code" class="form-control"> ',
+                buttons: {
+                    success: {
+                        label: "<i class='fa fa-tick'></i> OK",
+                        className: 'btn-success verify_pin',
+                        callback: function() {
+                            var pos_pin = md5($('#pos_pin').val());
+                            if (pos_pin == pos_settings.pin_code) {
+                                delete positems[item_id];
+                                checkPromoItem(item_id);
+                                // row.remove();
+                                if (positems.hasOwnProperty(item_id)) {
+                                } else if (checkPromoItem(item_id)) {
+                                    localStorage.setItem('positems', JSON.stringify(positems));
+                                    loadItems();
+                                }
+                            } else {
+                                bootbox.alert('Wrong Pin Code');
+                            }
+                        },
+                    },
+                },
+            });
+            boxd.on('shown.bs.modal', function() {
+                $('#pos_pin')
+                    .focus()
+                    .keypress(function(e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                            $('.verify_pin').trigger('click');
+                            return false;
+                        }
+                    });
+            });
+        } else {
+            delete positems[item_id];
+            // row.remove();
+            if (positems.hasOwnProperty(item_id)) {
+            } else if (checkPromoItem(item_id)) {
+                localStorage.setItem('positems', JSON.stringify(positems));
+                loadItems();
+            }
+        }
+    }
+    localStorage.setItem("cell_phone_added", "")
+}
+
+$('#closeEditModal').on("click",function(e){
+    console.log('arif : from modal close button clicked', protect_delete)    
+    var item_id = localStorage.getItem("cell_phone_added");
+    let imei = $('#pserial').val()
+
+    if(item_id && imei){
+        $('#prModal').modal('hide');
+        return false
+    }
+    localStorage.setItem("cell_phone_added", '')
+        if (protect_delete == 1) {
+            var boxd = bootbox.dialog({
+                title: "<i class='fa fa-key'></i> Pin Code",
+                message: '<input id="pos_pin" name="pos_pin" type="password" placeholder="Pin Code" class="form-control"> ',
+                buttons: {
+                    success: {
+                        label: "<i class='fa fa-tick'></i> OK",
+                        className: 'btn-success verify_pin',
+                        callback: function() {
+                            var pos_pin = md5($('#pos_pin').val());
+                            if (pos_pin == pos_settings.pin_code) {
+                                delete positems[item_id];
+                                checkPromoItem(item_id);
+                                // row.remove();
+                                if (positems.hasOwnProperty(item_id)) {
+                                } else if (checkPromoItem(item_id)) {
+                                    localStorage.setItem('positems', JSON.stringify(positems));
+                                    loadItems();
+                                }
+                            } else {
+                                bootbox.alert('Wrong Pin Code');
+                            }
+                        },
+                    },
+                },
+            });
+            boxd.on('shown.bs.modal', function() {
+                $('#pos_pin')
+                    .focus()
+                    .keypress(function(e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                            $('.verify_pin').trigger('click');
+                            return false;
+                        }
+                    });
+            });
+        } else {
+            console.log('arif : from checkpromo',positems[item_id])
+            delete positems[item_id];
+            // row.remove();
+            if (positems.hasOwnProperty(item_id)) {
+            } else if (checkPromoItem(item_id)) {
+                localStorage.setItem('positems', JSON.stringify(positems));
+                loadItems();
+            }
+        }
+        $('#prModal')
+            .modal('hide');
+        return false;
+
+})
 function openEditModal(item_id) {
+    localStorage.setItem("cell_phone_added", item_id)
     var row = $("#posTable").find("[data-item-id='" + item_id + "']");
     
     // return false;
