@@ -481,6 +481,7 @@ $(document).ready(function() {
         var row = $(this).closest('tr');
         var row_id = row.attr('id');
         item_id = row.attr('data-item-id');
+        localStorage.setItem('edit_item_id', item_id);
         item = positems[item_id];
         var qty = row
                 .children()
@@ -731,16 +732,25 @@ $(document).ready(function() {
      ----------------------- */
     $(document).on('click', '#editItem', function() {
         let cell_phone_added_id = localStorage.getItem("cell_phone_added")
-    
+        let edit_item_id = localStorage.getItem("edit_item_id")
+        console.log('arif positem:',positems[edit_item_id]);
         var modal = $("#prModal");
+        
+        
 
-        if(cell_phone_added_id && $('#pserial').val() == ""){
+        if((cell_phone_added_id || (edit_item_id && positems[edit_item_id] && positems[edit_item_id].row.category_id == 2)) &&  $('#pserial').val().length != 15){
             $('#pserial').css({
                 "border-color": "#a94442",
                 "-webkit-box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)",
                 "box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)"
             });
             return false
+        }else{
+            $("#pserial").css({
+                "border-color": "",
+                "-webkit-box-shadow": "",
+                "box-shadow": ""
+            });
         }
 
 
@@ -1796,7 +1806,10 @@ function removeFromOrderListIfNotIMEI() {
 $('#closeEditModal').on("click",function(e){
     console.log('arif : from modal close button clicked', protect_delete)    
     var item_id = localStorage.getItem("cell_phone_added");
+    let edit_item_id = localStorage.getItem("edit_item_id")
     let imei = $('#pserial').val()
+
+    // if(edit_item_id) item_id = edit_item_id
 
     if(item_id && imei){
         $('#prModal').modal('hide');
@@ -1852,6 +1865,12 @@ $('#closeEditModal').on("click",function(e){
         }
         $('#prModal')
             .modal('hide');
+        
+        $("#pserial").css({
+            "border-color": "",
+            "-webkit-box-shadow": "",
+            "box-shadow": ""
+        });
         return false;
 
 })
