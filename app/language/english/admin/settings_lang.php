@@ -21,6 +21,7 @@ $lang['site_name']                      = "Site Name";
 $lang['dateformat']                     = "Date Format";
 $lang['timezone']                       = "Timezone";
 $lang['maintenance_mode']               = "Maintenance Mode";
+$lang['signature_pad_active']           = "Signature Pad Active";
 $lang['image_width']                    = "Image Width";
 $lang['image_height']                   = "Image Height";
 $lang['thumbnail_width']                = "Thumbnail Width";
