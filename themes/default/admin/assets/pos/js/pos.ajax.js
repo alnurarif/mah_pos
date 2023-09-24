@@ -1811,11 +1811,11 @@ $('#closeEditModal').on("click",function(e){
 
     // if(edit_item_id) item_id = edit_item_id
 
-    if(item_id && imei){
-        $('#prModal').modal('hide');
-        return false
-    }
-    localStorage.setItem("cell_phone_added", '')
+    
+        
+    
+    if(item_id){
+        localStorage.setItem("cell_phone_added", '')
         if (protect_delete == 1) {
             var boxd = bootbox.dialog({
                 title: "<i class='fa fa-key'></i> Pin Code",
@@ -1872,6 +1872,10 @@ $('#closeEditModal').on("click",function(e){
             "box-shadow": ""
         });
         return false;
+    }
+    console.log('arif : test item_id and imei')
+    $('#prModal').modal('hide');
+    return false
 
 })
 $('#pserial').on("keyup",function(e){
