@@ -1356,6 +1356,7 @@
 </div>
 <?php unset($Settings->setting_id, $Settings->smtp_user, $Settings->smtp_pass, $Settings->smtp_port, $Settings->update, $Settings->reg_ver, $Settings->allow_reg, $Settings->default_email, $Settings->mmode, $Settings->timezone, $Settings->restrict_calendar, $Settings->restrict_user, $Settings->auto_reg, $Settings->reg_notification, $Settings->protocol, $Settings->mailpath, $Settings->smtp_crypto, $Settings->corn, $Settings->customer_group, $Settings->envato_username, $Settings->purchase_code); ?>
 <script type="text/javascript">
+    
     var site = <?=json_encode(array('url' => base_url(), 'base_url' => admin_url('/'), 'assets' => $assets, 'settings' => $Settings, 'dateFormats' => $dateFormats))?>,
         pos_settings = <?=json_encode($pos_settings);?>;
     var lang = {
@@ -1460,7 +1461,7 @@
 </script>
 
 <script type="text/javascript">
-
+    let signature_pad_active = '<?=$Settings->signature_pad_active?>';
     var product_variant = 0, shipping = 0, p_page = 0, per_page = 0, tcp = "<?=$tcp?>",
         pro_limit = <?= $pos_settings->pro_limit; ?>,
         brand_id = 0, obrand_id = 0, cat_id = "<?=$pos_settings->default_category?>",
@@ -2200,7 +2201,7 @@
             }
             if ($('#type').val() == 'Repair')
             {
-                if ($('#signature_name').val() == '') {
+                if ($('#signature_name').val() == ''  && parseInt(signature_pad_active)) {
                     bootbox.alert('Please take customer signature to complete the transaction!');
                     return false;
                 }

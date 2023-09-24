@@ -332,6 +332,16 @@ $ps = array('0' => lang("disable"), '1' => lang("enable"));
                             <?= form_dropdown('pdf_lib', $pdflibs, $Settings->pdf_lib, 'class="form-control tip" id="pdf_lib" required="required"'); ?>
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <?= lang('signature_pad_active', 'signature_pad_active'); ?>
+                            <div class="controls">  <?php
+                                echo form_dropdown('signature_pad_active', $wm, (isset($_POST['signature_pad_active']) ? $_POST['signature_pad_active'] : $Settings->signature_pad_active), 'class="tip form-control" required="required" id="signature_pad_active" style="width:100%;"');
+                                ?> </div>
+                        </div>
+                    </div>
+
                     <?php if (SHOP) { ?>
                     <div class="col-md-4">
                         <div class="form-group">

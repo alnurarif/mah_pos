@@ -45,6 +45,7 @@ class system_settings extends MY_Controller
         $this->form_validation->set_rules('language', lang('language'), 'trim|required');
         $this->form_validation->set_rules('warehouse', lang('default_warehouse'), 'trim|required');
         $this->form_validation->set_rules('biller', lang('default_biller'), 'trim|required');
+        $this->form_validation->set_rules('signature_pad_active', lang('signature_pad_active'), 'trim|required');
         $this->form_validation->set_rules('tax_rate', lang('product_tax'), 'trim|required');
         $this->form_validation->set_rules('tax_rate2', lang('invoice_tax'), 'trim|required');
         $this->form_validation->set_rules('sales_prefix', lang('sales_prefix'), 'trim');
@@ -151,6 +152,7 @@ class system_settings extends MY_Controller
                 'decimals_sep' => $this->input->post('decimals_sep'),
                 'thousands_sep' => $this->input->post('thousands_sep'),
                 'default_biller' => $this->input->post('biller'),
+                'signature_pad_active' => $this->input->post('signature_pad_active'),
                 'invoice_view' => $this->input->post('invoice_view'),
                 'rtl' => $this->input->post('rtl'),
                 'each_spent' => $this->input->post('each_spent') ? $this->input->post('each_spent') : NULL,
