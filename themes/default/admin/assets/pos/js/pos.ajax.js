@@ -1727,7 +1727,7 @@ $(document).on("click", function(event) {
 function removeFromOrderListIfNotIMEI() {
     var item_id = localStorage.getItem("cell_phone_added");
     console.log('arif : from remove order list if not imei', item_id, positems)
-    if(item_id != "" && positems[item_id].row.serial == ""){
+    if(item_id && positems[item_id]?.row && positems[item_id]?.row?.serial == ""){
         localStorage.setItem("cell_phone_added", '')
         if (protect_delete == 1) {
             var boxd = bootbox.dialog({
