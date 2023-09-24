@@ -963,7 +963,7 @@
                         <div class="form-group">
                             <label for="pserial" class="col-sm-4 control-label">IMEI#</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control kb-text" id="pserial">
+                                <input type="number" class="form-control kb-text" id="pserial">
                             </div>
                         </div>
                     <?php } ?>

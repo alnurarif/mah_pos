@@ -730,6 +730,20 @@ $(document).ready(function() {
      * Edit Row Method
      ----------------------- */
     $(document).on('click', '#editItem', function() {
+        let cell_phone_added_id = localStorage.getItem("cell_phone_added")
+    
+        var modal = $("#prModal");
+
+        if(cell_phone_added_id && $('#pserial').val() == ""){
+            $('#pserial').css({
+                "border-color": "#a94442",
+                "-webkit-box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)",
+                "box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)"
+            });
+            return false
+        }
+
+
         var row = $('#' + $('#row_id').val());
         var item_id = row.attr('data-item-id'),
             new_pr_tax = $('#ptax').val(),
@@ -1841,6 +1855,15 @@ $('#closeEditModal').on("click",function(e){
         return false;
 
 })
+$('#pserial').on("keyup",function(e){
+    var inputValue = $(this).val();
+                
+    if (inputValue.length > 15) {
+        // Truncate the input value to 15 characters
+        inputValue = inputValue.slice(0, 15);
+        $(this).val(inputValue);
+    }
+});
 function openEditModal(item_id) {
     localStorage.setItem("cell_phone_added", item_id)
     var row = $("#posTable").find("[data-item-id='" + item_id + "']");
