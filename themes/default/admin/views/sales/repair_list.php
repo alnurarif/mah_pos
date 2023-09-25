@@ -5,6 +5,7 @@
         }
     </style>
     <script>
+        let signature_pad_active = '<?=$Settings->signature_pad_active?>';
         function repair_status(x) {
             if (x == null) {
                 return '';

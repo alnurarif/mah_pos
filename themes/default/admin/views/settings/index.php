@@ -335,7 +335,7 @@ $ps = array('0' => lang("disable"), '1' => lang("enable"));
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <?= lang('signature_pad_active', 'signature_pad_active'); ?>
+                            <?= lang('signature_required', 'signature_required'); ?>
                             <div class="controls">  <?php
                                 echo form_dropdown('signature_pad_active', $wm, (isset($_POST['signature_pad_active']) ? $_POST['signature_pad_active'] : $Settings->signature_pad_active), 'class="tip form-control" required="required" id="signature_pad_active" style="width:100%;"');
                                 ?> </div>

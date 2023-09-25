@@ -237,7 +237,7 @@
             }
 
             if ($('#status').val() === 'Item Returned' || $('#status').val() === 'Partial Delivery' || $('#status').val() === 'Delivered') {
-                if ($('#signature_name').val() == '') {
+                if ($('#signature_name').val() == ''  && parseInt(signature_pad_active)) {
                     bootbox.alert('Please take customer signature to complete the transaction!');
                     return false;
                 }
