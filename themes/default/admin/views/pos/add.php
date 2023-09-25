@@ -14,10 +14,12 @@
     <link rel="shortcut icon" href="<?= $assets ?>images/icon.png"/>
     <link rel="stylesheet" href="<?= $assets ?>styles/theme.css" type="text/css"/>
     <link rel="stylesheet" href="<?= $assets ?>styles/style.css" type="text/css"/>
+    <link rel="stylesheet" href="<?= $assets ?>styles/sweetalert2.min.css" type="text/css"/>
     <link rel="stylesheet" href="<?= $assets ?>pos/css/posajax.css" type="text/css"/>
     <link rel="stylesheet" href="<?= $assets ?>pos/css/print.css" type="text/css" media="print"/>
     <script type="text/javascript" src="<?= $assets ?>js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="<?= $assets ?>js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="<?= $assets ?>js/sweetalert2.all.min.js"></script>
     <!--[if lt IE 9]>
     <script src="<?=$assets?>js/jquery.js"></script>
     <![endif]-->
@@ -2575,5 +2577,6 @@ if (isset($print) && !empty($print)) {
     include 'remote_printing.php';
 }
 ?>
+
 </body>
 </html>

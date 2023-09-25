@@ -1827,72 +1827,90 @@ $('#closeEditModal').on("click",function(e){
     let imei = $('#pserial').val()
 
     // if(edit_item_id) item_id = edit_item_id
-
-    
-        
-    
     if(item_id){
-        localStorage.setItem("cell_phone_added", '')
-        if (protect_delete == 1) {
-            var boxd = bootbox.dialog({
-                title: "<i class='fa fa-key'></i> Pin Code",
-                message: '<input id="pos_pin" name="pos_pin" type="password" placeholder="Pin Code" class="form-control"> ',
-                buttons: {
-                    success: {
-                        label: "<i class='fa fa-tick'></i> OK",
-                        className: 'btn-success verify_pin',
-                        callback: function() {
-                            var pos_pin = md5($('#pos_pin').val());
-                            if (pos_pin == pos_settings.pin_code) {
-                                delete positems[item_id];
-                                checkPromoItem(item_id);
-                                // row.remove();
-                                if (positems.hasOwnProperty(item_id)) {
-                                } else if (checkPromoItem(item_id)) {
-                                    localStorage.setItem('positems', JSON.stringify(positems));
-                                    loadItems();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'The item '+positems[item_id].label+' will be removed from the list, do you want to proceed?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            position: 'top',
+        }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.setItem("cell_phone_added", '')
+            if (protect_delete == 1) {
+                var boxd = bootbox.dialog({
+                    title: "<i class='fa fa-key'></i> Pin Code",
+                    message: '<input id="pos_pin" name="pos_pin" type="password" placeholder="Pin Code" class="form-control"> ',
+                    buttons: {
+                        success: {
+                            label: "<i class='fa fa-tick'></i> OK",
+                            className: 'btn-success verify_pin',
+                            callback: function() {
+                                var pos_pin = md5($('#pos_pin').val());
+                                if (pos_pin == pos_settings.pin_code) {
+                                    delete positems[item_id];
+                                    checkPromoItem(item_id);
+                                    // row.remove();
+                                    if (positems.hasOwnProperty(item_id)) {
+                                    } else if (checkPromoItem(item_id)) {
+                                        localStorage.setItem('positems', JSON.stringify(positems));
+                                        loadItems();
+                                    }
+                                } else {
+                                    bootbox.alert('Wrong Pin Code');
                                 }
-                            } else {
-                                bootbox.alert('Wrong Pin Code');
-                            }
+                            },
                         },
                     },
-                },
-            });
-            boxd.on('shown.bs.modal', function() {
-                $('#pos_pin')
-                    .focus()
-                    .keypress(function(e) {
-                        if (e.keyCode == 13) {
-                            e.preventDefault();
-                            $('.verify_pin').trigger('click');
-                            return false;
-                        }
-                    });
-            });
-        } else {
-            console.log('arif : from checkpromo',positems[item_id])
-            delete positems[item_id];
-            // row.remove();
-            if (positems.hasOwnProperty(item_id)) {
-            } else if (checkPromoItem(item_id)) {
-                localStorage.setItem('positems', JSON.stringify(positems));
-                loadItems();
+                });
+                boxd.on('shown.bs.modal', function() {
+                    $('#pos_pin')
+                        .focus()
+                        .keypress(function(e) {
+                            if (e.keyCode == 13) {
+                                e.preventDefault();
+                                $('.verify_pin').trigger('click');
+                                return false;
+                            }
+                        });
+                });
+            } else {
+                console.log('arif : from checkpromo',positems[item_id])
+                delete positems[item_id];
+                // row.remove();
+                if (positems.hasOwnProperty(item_id)) {
+                } else if (checkPromoItem(item_id)) {
+                    localStorage.setItem('positems', JSON.stringify(positems));
+                    loadItems();
+                }
             }
+            $('#prModal')
+                .modal('hide');
+            
+            $("#pserial").css({
+                "border-color": "",
+                "-webkit-box-shadow": "",
+                "box-shadow": ""
+            });
+            return false;
+            Swal.fire('Success!', 'Your action was successful!', 'success');
+        } else if (result.isDenied) {
+            console.log('arif : test item_id and imei')
+            $('#prModal').modal('hide');
+            return false
+            // The user clicked "No" or outside the modal
+            Swal.fire('Cancelled', 'Your action was not performed.', 'info');
         }
-        $('#prModal')
-            .modal('hide');
-        
-        $("#pserial").css({
-            "border-color": "",
-            "-webkit-box-shadow": "",
-            "box-shadow": ""
         });
-        return false;
+    }else{
+        console.log('arif : test item_id and imei')
+        $('#prModal').modal('hide');
+        return false
     }
-    console.log('arif : test item_id and imei')
-    $('#prModal').modal('hide');
-    return false
+        
+    
 
 })
 $('#pserial').on("keyup",function(e){
