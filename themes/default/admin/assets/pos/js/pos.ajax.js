@@ -561,6 +561,7 @@ $(document).ready(function() {
         if (item.options !== false) {
             var o = 1;
             opt = $('<select id="poption" name="poption" class="form-control select" />');
+            $('<option />', { value: '', text: 'Select Option' }).appendTo(opt);
             $.each(item.options, function() {
                 if (o == 1) {
                     if (product_option == '') {
@@ -568,6 +569,7 @@ $(document).ready(function() {
                     } else {
                         product_variant = product_option;
                     }
+                    product_variant = ''
                 }
                 $('<option />', { value: this.id, text: this.name }).appendTo(opt);
                 o++;
@@ -752,7 +754,22 @@ $(document).ready(function() {
                 "box-shadow": ""
             });
         }
-
+        let item_id_ = (edit_item_id) ? edit_item_id : undefined
+        item_id_ = (cell_phone_added_id == "") ?  item_id_ : cell_phone_added_id
+        if(positems[item_id_].options && positems[item_id_].options.length > 0 && $('#poption').val() == ''){
+            $('#s2id_poption .select2-choice').css({
+                "border-color": "#a94442",
+                "-webkit-box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)",
+                "box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)"
+            });
+            return false
+        }else{
+            $("#s2id_poption .select2-choice").css({
+                "border-color": "",
+                "-webkit-box-shadow": "",
+                "box-shadow": ""
+            });
+        }
 
         var row = $('#' + $('#row_id').val());
         var item_id = row.attr('data-item-id'),
@@ -1974,6 +1991,7 @@ function openEditModal(item_id) {
         if (item.options !== false) {
             var o = 1;
             opt = $('<select id="poption" name="poption" class="form-control select" />');
+            $('<option />', { value: '', text: 'Select Option' }).appendTo(opt);
             $.each(item.options, function() {
                 if (o == 1) {
                     if (product_option == '') {
@@ -1981,6 +1999,7 @@ function openEditModal(item_id) {
                     } else {
                         product_variant = product_option;
                     }
+                    product_variant = ''
                 }
                 $('<option />', { value: this.id, text: this.name }).appendTo(opt);
                 o++;
