@@ -738,6 +738,7 @@ $(document).ready(function() {
         console.log('arif positem:',positems[edit_item_id]);
         var modal = $("#prModal");
         
+        let error = 0;
         
 
         if((cell_phone_added_id || (edit_item_id && positems[edit_item_id] && positems[edit_item_id].row.category_id == 2)) &&  $('#pserial').val().length != 15){
@@ -746,7 +747,7 @@ $(document).ready(function() {
                 "-webkit-box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)",
                 "box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)"
             });
-            return false
+            error++
         }else{
             $("#pserial").css({
                 "border-color": "",
@@ -762,7 +763,7 @@ $(document).ready(function() {
                 "-webkit-box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)",
                 "box-shadow": "inset 0 1px 1px rgba(0,0,0,.075)"
             });
-            return false
+            error++
         }else{
             $("#s2id_poption .select2-choice").css({
                 "border-color": "",
@@ -770,7 +771,9 @@ $(document).ready(function() {
                 "box-shadow": ""
             });
         }
-
+        if(error > 0) {
+            return false
+        }
         var row = $('#' + $('#row_id').val());
         var item_id = row.attr('data-item-id'),
             new_pr_tax = $('#ptax').val(),
