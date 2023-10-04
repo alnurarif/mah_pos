@@ -1262,7 +1262,7 @@ class Sales extends MY_Controller
                 'sale_status' => 'returned',
                 'pos' => $sale->pos,
                 'repair_status' => $sale->repair_status,
-                'payment_status' => $sale->payment_status == 'paid' ? 'due' : 'pending',
+                'payment_status' => $sale->payment_status == 'paid' ? 'due' : 'returned',
             );
             if ($this->Settings->indian_gst) {
                 $data['cgst'] = $total_cgst;
