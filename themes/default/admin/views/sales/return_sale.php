@@ -372,7 +372,8 @@
                                 invoice_tax = parseFloat(this.rate);
                             }
                             if (this.type == 1) {
-                                invoice_tax = parseFloat(((total + product_tax - order_discount) * this.rate) / 100);
+                                // invoice_tax = parseFloat(((total + product_tax - order_discount) * this.rate) / 100);
+                                invoice_tax = parseFloat(((total + product_tax) * this.rate) / 100); //changed by arif
                             }
                         }
                     });
@@ -410,6 +411,7 @@
             if (site.settings.tax2 != 0) {
                 $('#ttax2').text(formatMoney(invoice_tax));
             }
+            $('#order_discount').text(formatMoney(order_discount))
             $('#gtotal').text(formatMoney(gtotal));
             <?php if($inv->payment_status == 'paid') { echo "$('#amount_1').val(formatDecimal(gtotal));"; } ?>
             if (an > site.settings.bc_fix && site.settings.bc_fix != 0) {
@@ -532,6 +534,11 @@
                                             <?= lang('surcharges') ?>
                                             <span class="totals_val pull-right" id="trs">0.00</span>
                                         </td>
+                                        <td>
+                                            <?= lang('discount') ?>
+                                            <span class="totals_val pull-right" id="order_discount">0.00</span>
+                                        </td>
+                                        
                                         <?php if ($Settings->tax2) { ?>
                                         <td>
                                             <?= lang('order_tax') ?>
