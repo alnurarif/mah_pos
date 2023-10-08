@@ -971,13 +971,13 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none;">
                         <label for="pquantity" class="col-sm-4 control-label"><?= lang('quantity') ?></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control kb-pad" id="pquantity">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none;">
                         <label for="punit" class="col-sm-4 control-label"><?= lang('product_unit') ?></label>
                         <div class="col-sm-8">
                             <div id="punits-div"></div>
@@ -998,7 +998,7 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none;">
                         <label for="pprice" class="col-sm-4 control-label"><?= lang('unit_price') ?></label>
 
                         <div class="col-sm-8">
