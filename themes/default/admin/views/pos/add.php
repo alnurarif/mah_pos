@@ -686,7 +686,9 @@
                                         <?php
                                         $us['test'] = 'Select Technician';
                                         foreach ($users as $usr) {
-                                            $us[$usr->id] = $usr->username;
+                                            if($usr->active == 1){
+                                                $us[$usr->id] = $usr->username;
+                                            }
                                         }
                                         echo form_dropdown('tech_id', $us, (isset($_POST['tech_id']) ? $_POST['tech_id'] : ""), 'id="tech_id" class="form-control pos-input-tip" data-placeholder="' . $this->lang->line("select") . ' ' . $this->lang->line("Technician") . '" required="required" style="width:100%;" ');
                                         ?>
