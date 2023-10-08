@@ -33,6 +33,55 @@
         </script>
     <?php }
     ?>
+    <style> 
+    .swal2-popup{
+        border-radius : 0px !important;
+    }
+    .confirm-button-class {
+  background-color: red !important;
+  color: white !important;
+  border: none !important;
+}
+
+.title-class {
+  font-size: 15px !important;
+}
+
+
+.icon-class {
+  font-size: 10px !important;
+}
+
+.confirm-button-class .swal2-icon svg {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.swal2-actions .swal2-confirm {
+    color: #fff !important;
+    background-color: #428bca !important;
+    border-color: #357ebd !important;
+    border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+.swal2-actions .swal2-cancel {
+  border-color: #f1c40f !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0px !important;
+  
+}
+
+.swal2-confirm:focus, .swal2-cancel:focus {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.swal2-actions button:hover {
+  border: none !important;
+}
+    </style>
 </head>
 
 <body onload="ClearFormData();">

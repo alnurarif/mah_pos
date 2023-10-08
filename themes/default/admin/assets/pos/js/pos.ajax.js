@@ -1833,12 +1833,13 @@ $('#closeEditModal').on("click",function(e){
     if(item_id){
         Swal.fire({
             title: 'Are you sure?',
-            text: 'The item '+positems[item_id].label+' will be removed from the list, do you want to proceed?',
+            html: '<p style="font-size: 14px; line-height: 22px;"">The item '+positems[item_id].label+' will be removed from the list, do you want to proceed?<p>',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             position: 'top',
+            icon : false
         }).then((result) => {
         if (result.isConfirmed) {
             localStorage.setItem("cell_phone_added", '')
