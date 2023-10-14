@@ -2728,15 +2728,11 @@ function pay_status(x) {
 
         return '<div class="text-center"><span class="payment_status label label-info">' + lang[x] + '</span></div>';
 
-    } else if (x == 'due') {
+    } else if (x == 'due' || x == 'returned') {
 
         return '<div class="text-center"><span class="payment_status label label-danger">' + lang[x] + '</span></div>';
 
-    } else if (x == 'returned') {
-
-        return '<div class="text-center"><span class="payment_status label label-success">Paid</span></div>';
-
-    }  else {
+    } else {
 
         return '<div class="text-center"><span class="payment_status label label-default">' + x + '</span></div>';
 

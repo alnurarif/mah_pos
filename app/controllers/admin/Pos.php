@@ -216,7 +216,6 @@ class Pos extends MY_Controller
         $this->datatables->where('pos', 1);
 
         $this->datatables->where('repair_status', 0);
-        $this->datatables->where('return_id IS NULL');
 
         if (!$this->Customer && !$this->Supplier && !$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
 
