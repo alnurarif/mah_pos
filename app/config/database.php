@@ -67,6 +67,7 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'upstairsny_upstairs-ny_com_pos23',
+	// 'database' => 'upstairsny_upstairs-ny_com_pos23_3', //latest live db
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'sma_',
 	'pconnect' => FALSE,

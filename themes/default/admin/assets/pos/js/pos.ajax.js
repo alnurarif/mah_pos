@@ -480,6 +480,7 @@ $(document).ready(function() {
         console.log('arif : from edit')
         var row = $(this).closest('tr');
         var row_id = row.attr('id');
+        let selectedOption = null
         item_id = row.attr('data-item-id');
         localStorage.setItem('edit_item_id', item_id);
         item = positems[item_id];
@@ -559,6 +560,7 @@ $(document).ready(function() {
         }
         var opt = '<p style="margin: 12px 0 0 0;">n/a</p>';
         if (item.options !== false) {
+            
             var o = 1;
             opt = $('<select id="poption" name="poption" class="form-control select" />');
             $('<option />', { value: '', text: 'Select Option' }).appendTo(opt);
@@ -571,12 +573,20 @@ $(document).ready(function() {
                     }
                     product_variant = ''
                 }
-                $('<option />', { value: this.id, text: this.name }).appendTo(opt);
+                if(row.children().children('.rserial').val() != 'false' && row.children().children('.roption').val() ==this.id){
+                    selectedOption = this.id
+                    $('<option />', { value: this.id, text: this.name, selected:'selected' }).appendTo(opt);
+
+                }else{
+                    $('<option />', { value: this.id, text: this.name }).appendTo(opt);
+
+                }
                 o++;
             });
         } else {
             product_variant = 0;
         }
+        
         if (item.units !== false) {
             uopt = $('<select id="punit" name="punit" class="form-control select" />');
             $.each(item.units, function() {
@@ -613,6 +623,10 @@ $(document).ready(function() {
         $('#prModal')
             .appendTo('body')
             .modal('show');
+        
+        if(selectedOption) {
+            $("#poption").select2().val(selectedOption).trigger("change");
+        }
     });
 
     $(document).on('click', '.comment', function() {
