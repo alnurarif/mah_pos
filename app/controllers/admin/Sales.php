@@ -125,7 +125,7 @@ class Sales extends MY_Controller
 
     public function repair_list($warehouse_id = null)
     {
-        $this->sma->checkPermissions();
+        $this->sma->checkPermissions('repair_list');
 
         if(!empty($_GET['clear'])) {
         	$clear_filter = $_GET['clear'];

@@ -226,7 +226,7 @@ class Settings_model extends CI_Model
 
     public function getGroupPermissions($id)
     {
-        $q = $this->db->get_where('permissions', array('group_id' => $id), 1);
+        $q = $this->db->get_where('sma_permissions', array('group_id' => $id), 1);
         if ($q->num_rows() > 0) {
             return $q->row();
         }
@@ -235,7 +235,7 @@ class Settings_model extends CI_Model
 
     public function GroupPermissions($id)
     {
-        $q = $this->db->get_where('permissions', array('group_id' => $id), 1);
+        $q = $this->db->get_where('sma_permissions', array('group_id' => $id), 1);
         if ($q->num_rows() > 0) {
             return $q->result_array();
         }
@@ -243,8 +243,8 @@ class Settings_model extends CI_Model
     }
 
     public function updatePermissions($id, $data = array())
-    {
-        if ($this->db->update('permissions', $data, array('group_id' => $id)) && $this->db->update('users', array('show_price' => $data['products-price'], 'show_cost' => $data['products-cost']), array('group_id' => $id))) {
+    {   
+        if ($this->db->update('sma_permissions', $data, array('group_id' => $id)) && $this->db->update('users', array('show_price' => $data['products-price'], 'show_cost' => $data['products-cost']), array('group_id' => $id))) {
             return true;
         }
         return false;
@@ -254,7 +254,7 @@ class Settings_model extends CI_Model
     {
         if ($this->db->insert("groups", $data)) {
             $gid = $this->db->insert_id();
-            $this->db->insert('permissions', array('group_id' => $gid));
+            $this->db->insert('sma_permissions', array('group_id' => $gid));
             return $gid;
         }
         return false;

@@ -120,8 +120,8 @@
                                             <label for="sales-return_sales" class="padding05"><?= lang('return_sales') ?></label>
                                         </span>
                                         <span style="display:inline-block;">
-                                            <input type="checkbox" value="1" id="sales-repir_list" class="checkbox" name="sales-repir_list" <?php echo $p->{'sales-repir_list'} ? "checked" : ''; ?>>
-                                            <label for="sales-repir_list" class="padding05"><?= lang('Repir_List') ?></label>
+                                            <input type="checkbox" value="1" id="sales-repair_list" class="checkbox" name="sales-repair_list" <?php echo $p->{'sales-repair_list'} ? "checked" : ''; ?>>
+                                            <label for="sales-repair_list" class="padding05"><?= lang('Repir_List') ?></label>
                                         </span>
                                     </td>
                                 </tr>
