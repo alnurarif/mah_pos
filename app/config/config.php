@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'https://pos23.nazish.synology.me/';
-$config['base_url'] = 'http://localhost/ci_pos/';
+$config['base_url'] = 'http://localhost/pos/mah_pos/';
 
 /*
 |--------------------------------------------------------------------------
